@@ -1,0 +1,19 @@
+collections:
+  - name: "determine"
+    label: "Determine"
+    folder: "content/determine"
+    create: true
+    slug: "{{numero}}"
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "post" }
+      - { label: "Titolo", name: "title", widget: "string" }
+      - { label: "Tipologia", name: "tipologia", widget: "string" }
+      - { label: "Ufficio", name: "ufficio", widget: "string" }
+      - { label: "Oggetto", name: "oggetto", widget: "string" }
+      - label: "Pubblicazione"
+        name: "pubblicazione"
+        widget: "object"
+        fields:
+          - { label: "Dal", name: "dal", widget: "datetime", date_format: "YYYY-MM-DD" }
+          - { label: "Al", name: "al", widget: "datetime", date_format: "YYYY-MM-DD" }
+      - { label: "Numero", name: "numero", widget: "string" }
