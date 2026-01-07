@@ -3,62 +3,44 @@ layout: default
 ---
 <div class="container">
 
-    <h2>Trasparenza Gabriel Jones</h2>
-<input type="text" id="search" placeholder="Cerca un atto..." onkeyup="searchAtti()">
-<ul id="results"></ul>
+<h2>FOIA 18F</h2>
 
+<input type="text" id="search" placeholder="Cerca un atto..." class="form-control mb-3">
 
-<script>
-    async function searchAtti() {
-    let query = document.getElementById("search").value.toLowerCase();
-    let resultsList = document.getElementById("results");
-    resultsList.innerHTML = "";
+<div id="atti">
 
-    let response = await fetch("/trasparenza.json");
-    let atti = await response.json();
+{% for post in site.posts %}
+<a href="{{ post.url }}" class="atto-link">
+    <div class="col-12 amministrazione amministrazione-primary atto"
+         data-search="{{ post.title | downcase }} {{ post.tipologia | downcase }} {{ post.ufficio | downcase }} {{ post.oggetto | downcase }}">
+        
+        <div class="row">
+            <div class="col-md-4 fw-bold">Tipologia dell'atto:</div>
+            <div class="col-md-8">{{ post.tipologia }}</div>
+        </div>
 
-    let results = atti.filter(atto => atto.titolo.toLowerCase().includes(query));
+        <div class="row">
+            <div class="col-md-4 fw-bold">Ufficio:</div>
+            <div class="col-md-8">{{ post.ufficio }}</div>
+        </div>
 
-    results.forEach(atto => {
-        let li = document.createElement("li");
-        li.innerHTML = `<a href="${atto.url}">${atto.titolo} (${atto.data})</a>`;
-        resultsList.appendChild(li);
-    });
-}
+        <div class="row">
+            <div class="col-md-4 fw-bold">Oggetto:</div>
+            <div class="col-md-8">{{ post.oggetto }}</div>
+        </div>
 
-</script>
-{% for atto in site.data.trasparenza %}
-<div class="col-12 amministrazione amministrazione-primary">
-    <div class="row">
-        <div class="col-md-4 fw-bold">Tipologia dell'atto:</div>
-        <div class="col-md-8">{{ atto.tipologia }}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 fw-bold">Ufficio:</div>
-        <div class="col-md-8">{{ atto.ufficio }}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 fw-bold">Oggetto:</div>
-        <div class="col-md-8">{{ atto.oggetto }}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 fw-bold">Periodo di pubblicazione:</div>
-        <div class="col-md-8">{{ atto.pubblicazione }}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 fw-bold">Numero atto:</div>
-        <div class="col-md-8">{{ atto.numero }}</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 fw-bold">Allegati:</div>
-        <div class="col-md-8 overflow-hidden">
-            {% for allegato in atto.allegati %}
-                <div>
-                    <a target="_blank" href="{{ allegato.link }}">{{ allegato.nome }}</a>
-                </div>
-            {% endfor %}
+        <div class="row">
+            <div class="col-md-4 fw-bold">Periodo di pubblicazione:</div>
+            <div class="col-md-8">{{ post.pubblicazione }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 fw-bold">Numero atto:</div>
+            <div class="col-md-8">{{ post.numero }}</div>
         </div>
     </div>
-</div>
+</a>
 {% endfor %}
+
+</div>
 </div>
